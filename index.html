@@ -1,0 +1,174 @@
+
+</html><!DOCTYPE html>
+<html lang="en">
+<head>jatmaomogames.mygamesonline.org
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: teal;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    .board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+    }
+    .cell {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+    #reset-button {
+        width: 200px;
+        padding: 10px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .cursor-blue {
+        cursor: pointer;
+        cursor: url('data:image/svg+xml;utf8,<svg fill="skyblue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.375c-5.622 0-10.125-4.553-10.125-10.125S6.378 1.125 12 1.125 22.125 5.678 22.125 11.25 17.622 21.375 12 21.375z"/></svg>'), auto;
+    }
+    .win-line {
+        background-color: rgba(0, 255, 0, 0.3);
+    }
+    .score-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+    .score {
+        font-size: 1.2rem;
+    }
+</style>
+</head>
+<body>
+<div class="score-container">
+    <div class="score">
+        <span id="player1-name">Player One</span>: <span id="player1-score">0</span>
+    </div>
+    <div class="score">
+        <span id="player2-name">Player Two</span>: <span id="player2-score">0</span>
+    </div>
+</div>
+
+<div class="board" id="board">
+    <div class="cell" onclick="handleClick(0)"></div>
+    <div class="cell" onclick="handleClick(1)"></div>
+    <div class="cell" onclick="handleClick(2)"></div>
+    <div class="cell" onclick="handleClick(3)"></div>
+    <div class="cell" onclick="handleClick(4)"></div>
+    <div class="cell" onclick="handleClick(5)"></div>
+    <div class="cell" onclick="handleClick(6)"></div>
+    <div class="cell" onclick="handleClick(7)"></div>
+    <div class="cell" onclick="handleClick(8)"></div>
+</div>
+<button id="reset-button" onclick="resetGame()" class="cursor-blue">Reset Game</button>
+
+<script>
+    const cells = document.querySelectorAll('.cell');
+    const board = document.getElementById('board');
+    const resetButton = document.getElementById('reset-button');
+    const player1Name = document.getElementById('player1-name');
+    const player1Score = document.getElementById('player1-score');
+    const player2Name = document.getElementById('player2-name');
+    const player2Score = document.getElementById('player2-score');
+    let currentPlayer = 'X';
+    let gameActive = true;
+    let gameState = ['', '', '', '', '', '', '', '', ''];
+    let player1Wins = 0;
+    let player2Wins = 0;
+
+    function handleClick(cellIndex) {
+        if (gameState[cellIndex] !== '' || !gameActive) return;
+        gameState[cellIndex] = currentPlayer;
+        cells[cellIndex].innerText = currentPlayer;
+        checkWin();
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    }
+
+    function checkWin() {
+        const winningConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+        for (let condition of winningConditions) {
+            const [a, b, c] = condition;
+            if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                gameActive = false;
+                cells[a].classList.add('win');
+                cells[b].classList.add('win');
+                cells[c].classList.add('win');
+                markWinningLine(a, b, c);
+                updateScore();
+                return;
+            }
+        }
+        if (!gameState.includes('')) {
+            gameActive = false;
+        }
+    }
+
+    function markWinningLine(a, b, c) {
+        const cellsToMark = [cells[a], cells[b], cells[c]];
+        cellsToMark.forEach(cell => cell.classList.add('win-line'));
+    }
+
+    function updateScore() {
+        if (currentPlayer === 'X') {
+            player1Wins++;
+            player1Score.innerText = player1Wins;
+        } else {
+            player2Wins++;
+            player2Score.innerText = player2Wins;
+        }
+    }
+
+    function resetGame() {
+        currentPlayer = 'X';
+        gameActive = true;
+        gameState = ['', '', '', '', '', '', '', '', ''];
+        cells.forEach(cell => {
+            cell.innerText = '';
+            cell.classList.remove('win', 'win-line');
+        });
+    }
+</script>
+</body>
+</html><!DOCTYPE html>
+
+<html>
+<head>
+		<meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="styles/style.css"/>
+		<title>Hello, World!</title>
+</head>
+<body>
+		<h1>
+TIC TAC TOE GAME 
+				CREATED BY JAT MAOMO TECH
